@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="ApexWireMethodToProperty" icon-name="custom:custom63">
+        <div class="slds-m-around_medium">
+            <template lwc:if={wireacc.data}>
+                <template for:each={wireacc.data} for:item="contact">
+                    <p key={contact.Id}>{contact.TeamMemberRole}</p>
+                </template>
+            </template>
+            <template lwc:elseif={contacts.error}>
+                <c-error-panel errors={contacts.error}></c-error-panel>
+            </template>
+        </div>
+    </lightning-card>
+</template>
