@@ -1,0 +1,113 @@
+.lighcard{
+  justify-content: center;
+  display: flex;
+  height: auto;
+  background-color: black;
+}
+.image1{
+  z-index:1;
+  position: absolute;
+ margin-left:23px;
+ width:100px;
+ height: 140px;
+ border:solid;
+ border-width: 3px;
+ border-color: rgb(33, 66, 136);
+ outline: chocolate 3px;
+
+}
+.card2{
+  z-index:1.9;
+  width: 150px;
+  height: 180px;
+  text-align: center;
+  border: solid;
+ border-width: 2px;
+  border-color: rgb(25, 29, 88);
+ background-color: aliceblue;
+  position:relative;
+  bottom: -100px;
+  overflow:auto;
+
+
+}
+
+
+
+.deleteicon{
+  --lwc-colorTextIconDefault:black;
+  margin-bottom: 5px;
+
+}
+
+.data{
+  width: 100%;
+  height: 120px;
+  padding-top: 10px;
+}
+.slds-box_xx-small, .slds-box--xx-small {
+  width: 28px;
+  height:28px;
+  background-color: white;
+  margin-left: 91px;
+  margin-top: 2px;
+  position: absolute;
+  z-index:2;
+
+
+}
+.box{
+  background-color: lightgrey;
+  width:38px;
+  height: 38px;
+  border:2px solid rgba(73, 29, 75, 0.822);
+ margin-left: 52px;
+ margin-top: 140px;
+ padding-left: 9px;
+ padding-top: 8px;
+
+}  
+.iconhover{
+visibility: hidden;
+}
+.whole{  
+  background-color: black;
+  height:fit-content;
+
+}
+
+.afhover:hover+.iconhover{
+visibility: visible;
+
+}
+.editicon 
+{
+  padding-left: 8px;
+  --lwc-colorTextIconDefault:rgb(13, 111, 240);
+}
+.user
+{
+   
+  font-size:17px;
+  font-style: bold;
+}
+.nameandicon{
+  padding-top: 45px;
+  align-items: end;
+}
+.role{
+  font-size: 13px;
+  padding-top: 4px;
+}
+.description{
+  font-size: 10px;
+  padding-top: 4px;
+  
+}
+.icon{
+  width:17px;
+  height: 17px;
+  padding-top: 4px;
+  margin-left: 10px;
+
+}

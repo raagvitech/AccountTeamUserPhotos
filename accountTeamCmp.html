@@ -1,0 +1,275 @@
+<template>   
+    <div class="whole">
+    <div class="slds-box">
+    <div class="slds-grid slds-wrap slds-gutters_xxx-small slds-grid_align-center "> 
+       
+        <template for:each={rectangle.data} for:item="dataItem" >
+            <div key={dataItem.id}   class="slds-col slds-size_1-of-11"> 
+
+              <div class="Container">
+                <div class="afhover">
+                  <img src={dataItem.User.FullPhotoUrl} onclick={imageHandler} class="image1">
+               </div>
+                    <div class="iconhover">
+                      <div class="slds-box slds-box_xx-small">
+                         <lightning-icon icon-name="utility:delete" onclick={deleteHandler} data-id={dataItem.User.Id} data-value={dataItem.User.Name} class="deleteicon" size="x-small" style="border-radius:2px"></lightning-icon>
+                      </div>
+                    </div>
+                      
+                
+             
+                <div class="card2">              
+                      <div class="nameandicon">
+                          <p class="user">{dataItem.User.Name}
+                          <lightning-icon icon-name="utility:edit" onclick={iconHandler} class="editicon" alternative-text="edit!" data-id={dataItem.User.Id} data-value={dataItem.User.Name} title="edit" size="x-small"></lightning-icon> 
+                          </p>
+                      </div>
+                          <p class="role">{dataItem.TeamMemberRole}</p>
+                          <p class="description">{dataItem.User.AboutMe}</p> 
+
+                        <div class="slds-grid">
+                            <template for:each={icon} for:item="image">
+                            <div key={image.id} class="slds-col">                    
+                            <p header={image.header}></p>
+                            <img src={image.src} data-value={image.header} onclick={navigate} class="icon">
+                            </div>       
+                            </template>          
+                        </div> 
+                </div>   
+              </div>  
+                <div class="data"></div>
+           </div>
+        </template> 
+           <div class="box">
+           <lightning-icon icon-name="utility:add" onclick={handleClick} class="addbutton" size="x-small"></lightning-icon>
+           </div>
+    </div> 
+  </div>
+</div>
+    <template if:true={isModalOpen}>
+      
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+          <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                  <lightning-icon icon-name="utility:close"
+                      alternative-text="close"
+                      variant="inverse"
+                      size="small" ></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Account Team Member</h2>
+          </header>
+         <!-- body of the model -->
+         <!-- username search area model -->
+         <!-- <div class="slds-grid slds-wrap"> -->
+            <div class="slds-modal__content slds-p-around_medium">
+             
+              
+               
+                  <div class="slds-col slds-size_3-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+                    
+                      <lightning-input 
+                      label="User Name"
+                      type="text"
+                      onclick={handelSearchKey}                     
+                      value={userValue}>              
+                        </lightning-input>
+                    <template if:true={usermodel}>
+                        <template for:each={search} for:item="data">                                        
+                      <option key={data.Id} class="uiInputSelectOption" onclick={searchuser} data-id={data.Id} data-value={data.Name}>{data.Name}</option>
+                                                                                                              
+                        </template>
+                      </template>                                                        
+                       </div>                                      
+               
+            
+          <!-- Account team member role model -->
+
+            <div class="slds-col slds-size_3-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+              <lightning-input label="TeamMemberRole"
+              type="text"
+              onclick={handleTeamRole}                     
+              value={selectedTeamRole}> </lightning-input>
+              <template if:true={teammodel}>
+                <template for:each={teamRole} for:item="data">                                        
+              <option key={data.Id} class="uiInputSelectOption" onclick={searchRole} data-value={data.TeamMemberRole}>{data.TeamMemberRole}</option>                                                                                         
+                </template>
+              </template>                 
+          </div>
+            
+          <!-- Account Access model -->
+            <div class="slds-col slds-size_3-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+              <lightning-input label="AccountAccess"
+              type="text"
+              onclick={handleAccess}                     
+              value={acess}> </lightning-input>
+              <template if:true={accessmodel}>
+                <template for:each={accessLevel} for:item="data">                                        
+              <option key={data.Id} class="uiInputSelectOption" onclick={searchAccess} data-value={data.AccountAccessLevel}>{data.AccountAccessLevel}</option>                                                                                         
+                </template>
+              </template>                 
+          </div>
+            
+            <!-- Case access model=======================++++++ -->
+          
+              <div class="slds-col slds-size_3-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+                <lightning-input label="CaseAccess"
+                type="text"
+                onclick={handleCase}                     
+                value={caseRecord}> </lightning-input> 
+                <template if:true={casemodel}>
+                  <template for:each={caseAcc} for:item="data">                                        
+                <option key={data.Id} class="uiInputSelectOption" onclick={searchCaseAccess} data-value={data.CaseAccessLevel}>{data.CaseAccessLevel}</option>                                                                                         
+                  </template>
+                </template>                 
+            </div>
+              
+        <!-- opportunity access model===============+++++++++++++++ -->
+        
+          <div class="slds-col slds-size_3-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+            <lightning-input label="OpportunityAccess"
+            type="text"
+            onclick={handleOppAccess}                     
+            value={oppRecord}> </lightning-input>
+            <template if:true={oppmodel}>
+              <template for:each={oppAccess} for:item="data">                                        
+            <option key={data.Id} class="uiInputSelectOption" onclick={searchOppAccess} data-value={data.OpportunityAccessLevel}>{data.OpportunityAccessLevel}</option>                                                                                         
+              </template>
+            </template>                 
+        </div>
+          </div>
+        <!-- </div> -->
+          <!-- Modal/Popup Box LWC footer starts here -->
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={createAccountTeamMember} title="OK">Save</button>
+                </footer>
+            </div>
+        </section>
+     
+    </template>
+    <!-- edit popup model==============>>>>>>>>>>>>>>>> -->
+    <template if:true={edilModel}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container" >
+          <!-- Modal header -->
+          <div class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeEdilModal}>
+                  <lightning-icon icon-name="utility:close"
+                      alternative-text="close"
+                      variant="inverse"
+                      size="small" ></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Edil User Details</h2>
+          </div>
+          <!-- Modal/Popup Body============== -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+      <div class="slds-grid ">  
+      <div class="slds-col slds-p-horizontal_medium">
+             <lightning-input type="text" label="First Name" onfocusout={firstnameHandler} value={firstName}></lightning-input>
+             <lightning-input type="text" label="Title" onfocusout={titlehandler} value={title}></lightning-input>
+             <p><b>Address</b></p>
+             <lightning-textarea name="input1" label="Street" onfocusout={strrethandler} value={street} ></lightning-textarea>
+                  <lightning-input type="text" label="City" onfocusout={cityHandler} value={city}></lightning-input>
+                  <lightning-input type="text" label="Zip/Postal Code" onfocusout={ziphandler} value={zipCode}></lightning-input>
+                  <lightning-textarea name="input3" label="About Me" onfocusout={aboutmeHandler} value={aboutMe} ></lightning-textarea> 
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-7">
+                    <lightning-file-upload
+                    label="Attach receipt"
+                    name="fileUploader"
+                    accept={acceptedFormats}
+                    record-id={myRecordId}
+                    onuploadfinished={handleUploadFinished}
+                    multiple
+                >
+                </lightning-file-upload>
+                    </div> 
+      </div>
+      <div class="slds-col slds-p-horizontal_medium">
+              <lightning-input type="text" label="Last Name"  onfocusout={lastNameHandler} value={lastName}></lightning-input>
+              <lightning-input type="text" label="Company Name" onfocusout={companyHandler} value={companyName}></lightning-input>
+              <lightning-input type="Phone" label="Mobile No." onfocusout={mobileHandler} value={mobile}></lightning-input>
+              <lightning-input type="Email" label="Email" onfocusout={emailHandler} value={email}></lightning-input>
+              <lightning-input type="text" label="State/Province" onfocusout={stateHandler} value={state}></lightning-input>
+              <lightning-input type="text" label="Country" onfocusout={countryHandler} value={country}></lightning-input>
+      </div>
+      </div> 
+    </div>
+          <!-- Modal/Popup Box LWC footer starts here -->
+          <div class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" onclick={closeEdilModal} title="Cancel">Cancel</button>
+              <button class="slds-button slds-button_brand" onclick={editSaveHandler} title="OK">Save</button>
+          </div>
+     
+    </div>
+  </section>
+  <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>
+
+<!-- <<<<<<<<<<<<<<<<<<<model for edit user photo>>>>>>>>>>>>>>>> -->
+<template if:true={imageModel}>
+  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <!-- Modal/Popup Box LWC header here -->
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeImageModel}>
+                <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-03" class="slds-text-heading_medium slds-hyphenate">Change profile photo</h2>
+        </header>
+        <!-- Modal/Popup Box LWC body starts here -->
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-3">
+          <lightning-file-upload
+          label="Attach receipt"
+          name="fileUploader"
+          accept={acceptedFormats}
+          record-id={myRecordId}
+          onuploadfinished={handleUploadFinished}
+          multiple
+      >
+      </lightning-file-upload>
+          </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_brand" onclick={updatePhotoHandler} title="OK">Save</button>
+        </footer>
+    </div>
+</section>
+
+</template>
+
+<!-- <<<<<<<<<<<<<<<<<<<<model for delete conformation====>>>>>>>>>>>>>>>>> -->
+<div class="deletemodel">
+<template if:true={deleteHandlerUserModel}>
+  <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+    <div class="slds-modal__container">
+        <!-- Modal/Popup Box LWC header here -->
+        <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closedeleteModal}>
+                <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-05" class="slds-text-heading_medium slds-hyphenate"><p style="color: rgb(218, 29, 85);" size="14px">Delete AccountTeamMember</p></h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-5">
+            <p style="color: blue;"><b>Are you Sure
+            </b></p>
+           
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={closedeleteModal} title="Cancel">Cancel</button>
+            <button class="slds-button slds-button_brand" onclick={deleteaccTeamHandler} title="OK">OK</button>
+        </footer>
+    </div>
+  </section>
+  </template>
+</div>
+</template>
